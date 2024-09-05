@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+enum designation {
+    clerk,
+    accountant_head
+};
+
+struct employee {
+    int emp_id;
+    char name[50];
+    enum designation desig;
+    float salary;
+    int date_of_joining;
+};
+
+int main() {
+    struct employee e[5];
+    int i, desig_input;
+
+    for(i = 0; i < 5; i++) {
+        printf("\nEnter details for employee %d:\n", i + 1);
+        
+        printf("Enter Employee ID: ");
+        scanf("%d", &e[i].emp_id);
+        
+        printf("Enter Name: ");
+        scanf(" %[^\n]", e[i].name);
+        
+        printf("Enter Designation (0 for Clerk, 1 for Accountant Head): ");
+        scanf("%d", &desig_input);
+        e[i].desig = (enum designation)desig_input;
+        
+        printf("Enter Basic Salary: ");
+        scanf("%f", &e[i].salary);
+        
+        printf("Enter Date of Joining (years ago): ");
+        scanf("%d", &e[i].date_of_joining);
+    }
+    
+    for(i = 0; i < 5; i++) {
+        printf("\nName: %s", e[i].name);
+        printf("\nEmployee ID: %d", e[i].emp_id);
+        printf("\nBasic Salary: %.2f", e[i].salary);
+
+        if(e[i].desig == accountant_head) {
+            printf("\nDesignation: Accountant Head");
+            if (e[i].salary == 50000) {
+                if (e[i].date_of_joining > 5) {
+                    e[i].salary += (10.0 / 100.0) * e[i].salary;
+                } else if (e[i].date_of_joining > 3 && e[i].date_of_joining <= 5) {
+                    e[i].salary += (5.0 / 100.0) * e[i].salary;
+                } else if (e[i].date_of_joining <= 3) {
+                    e[i].salary += (2.0 / 100.0) * e[i].salary;
+                }
+            }
+        } else if (e[i].desig == clerk) {
+            printf("\nDesignation: Clerk");
+            if (e[i].date_of_joining > 5) {
+                e[i].salary += (15.0 / 100.0) * e[i].salary;
+            } else if (e[i].date_of_joining > 3 && e[i].date_of_joining <= 5) {
+                e[i].salary += (10.0 / 100.0) * e[i].salary;
+            } else if (e[i].date_of_joining <= 3) {
+                e[i].salary += (5.0 / 100.0) * e[i].salary;
+            }
+        }
+
+        printf("\nUpdated Salary: %.2f", e[i].salary);
+        printf("\nDate of Joining: %d years ago\n", e[i].date_of_joining);
+    }
+
+    return 0;
+}
+```
